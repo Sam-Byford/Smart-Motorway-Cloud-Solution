@@ -1,8 +1,6 @@
 # Smart-Motorway-Cloud-Solution
 Third year cloud computing module which required an 'infrastructure-as-code' solution for an expanding smart motorway business.
 
-![NewDiagram (1) (1)](https://user-images.githubusercontent.com/32711675/128641199-2f3bc39f-9068-40b4-83c9-dc6d8dbb49dc.png)
-
 ## Task Brief
 Your task for this assessment is to design and develop a cloud ‘infrastructure-as-code’ solution for a business scenario (seen below). This development approach allows you to programmatically specify the cloud resources needed for the task in a declarative format using YAML based configuration files via the Google Cloud Deployment Manager (https://cloud.google.com/deploymentmanager/docs/fundamentals) (DM). To accompany the YAML files you can use either Jinja2 or Python file templates to parameterize your cloud service configuration that will allow reuse of your code for common cloud service deployments.
 
@@ -18,3 +16,7 @@ you cannot use any other cloud service types for your solution other than those 
 There is no single correct solution as there are many cloud resources type solutions that could fit. Essentially, each student can demonstrate their intellectual curiosity and technical creativity when designing and developing their own solution.
 
 The YAML configuration file and template files you create should adopt an optimal approach to limit code repetition, with the emphasis on reusable templates as building blocks for importing in your configuration file. Your entire solution must be able to run from a single YAML configuration file.
+
+## Cloud Architecture Diagram
+The following diagram displays the resources chosen for my solution as well as the storage and network configurations
+![NewDiagram (1) (1)](https://user-images.githubusercontent.com/32711675/128641199-2f3bc39f-9068-40b4-83c9-dc6d8dbb49dc.png)
