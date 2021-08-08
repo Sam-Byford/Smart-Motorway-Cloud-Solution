@@ -1,2 +1,2 @@
 # Smart-Motorway-Cloud-Solution
-Infrastructure-as-code solution for an expanding smart motorway business
+Third year cloud computing module which required an 'infrastructure-as-code' solution for an expanding smart motorway business.
