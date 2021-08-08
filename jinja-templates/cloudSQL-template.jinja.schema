@@ -1,0 +1,19 @@
+info:
+  title: cloudSQL storage template
+  description: Creates a cloudSQL instance and a database to store sensor and display information
+
+imports:
+- path: cloudSQL-template.jinja
+
+required:
+- region
+
+properties: 
+  region:
+    type: string
+    description: region in which the instance will reside
+
+  charset:
+    type: string
+    default: utf8
+    description: type of character set

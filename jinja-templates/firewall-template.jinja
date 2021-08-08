@@ -1,0 +1,29 @@
+resources:
+- name: {{ env["name"] }}
+  type: compute.v1.firewall
+  properties:
+    network: {{ properties["network"] }}
+    sourceRanges: {{properties["sourceRanges"]}}
+    allowed:
+    {# Sets the protocols that are allowed and the ports they are allowed over #}
+    {# If statement checks if one or multiple protocols are being set. If it is only one, it is simply defined with the ports #}
+    {% if properties['multiProtocols'] == [] %}
+    - IPProtocol: {{ properties["IPProtocol"] }}
+      ports: {{properties["ports"]}}
+    {% else %}
+    {# If multiple protocols are being enabled, they are each configured one at a time #}
+    {% for protocol in properties['multiProtocols'] -%}
+    {# first a check is done to see if one of the protocols is ICMP - ICMP does not require ports to be specified #}
+    {% if protocol == "ICMP" %}
+    - IPProtocol: {{protocol}}
+    {% else %}
+    {# If the protocol is not ICMP, configure the protocol with its required ports #}
+    - IPProtocol: {{protocol}}
+      ports: {{properties["ports"]}}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    logConfig:
+      enable: true
+    TargetTags:
+    - {{env["name"]}} {# Tags for the rule to ensure any instances using the rule are correctly assigned to it #}

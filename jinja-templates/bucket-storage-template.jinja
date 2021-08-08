@@ -1,0 +1,39 @@
+{#Reference for code - https://github.com/GoogleCloudPlatform/deploymentmanager-samples/blob/master/google/resource-snippets/storage-v1/bucket.jinja#}
+
+{% set logBucketName = env["name"]+"-logs" %}
+
+resources:
+- type: storage.v1.bucket
+  name: {{env["name"]}}
+  properties:
+    location: {{properties["location"]}}
+    storageClass: STANDARD {# STANDARD storage as it is storage that will be accessed frequently #}
+    {#Will remove any videos that have been in storage for a year#}
+    lifecycle:
+      rule:
+        - action:
+            type: Delete
+          condition:
+            age: 365
+    logging: {# Define logging bucket to store this buckets logs #}
+      logBucket: $(ref.{{logBucketName}}.name)
+      logObjectPrefix: {{properties["logObjectPrefix"]}}
+    iamConfiguration:
+      uniformBucketLevelAccess:
+        enabled: true
+    {#Give the service account admin access to the camera bucket. Secures the bucket by ensuring only the service account has access to it.#}
+    {#Because the VMs run as the service account, any services or applications running on them now have access to the camera buckets#}
+    {% if properties['serviceAccountId'] != "" %}
+    accessControl:
+      gcpIamPolicy:
+        bindings:
+        - role: roles/storage.admin
+          members:
+          - "serviceAccount:$(ref.{{ properties['serviceAccountId'] }}.email)"
+    {% endif %}
+
+- type: storage.v1.bucket {#Regional london log bucket. Logs make it easy to see any changes made to the bucket#}
+  name: {{logBucketName}}
+  properties:
+    location: {{properties["location"]}}
+    storageClass: STANDARD

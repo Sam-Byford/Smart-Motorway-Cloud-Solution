@@ -1,0 +1,24 @@
+info:
+  title: load balancing template 
+  description: Creates a internal TCP load balancer and forwarding rule
+
+imports:
+- path: internal-TCP-load-balancing-template.jinja
+
+required:
+- region
+  network
+  health-check
+
+properties:
+  region:
+    type: string
+    description: region where the load balancer resides
+
+  network:
+    type: string
+    description: network where the load balancer resides
+
+  health-check:
+    type: string
+    description: URL of the health-check resource for the load balancer

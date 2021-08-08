@@ -1,0 +1,23 @@
+{# Reference for code - https://github.com/GoogleCloudPlatform/deploymentmanager-samples/blob/master/examples/v2/sqladmin/jinja/sqladmin.jinja#}
+
+{% set instancename = env["name"] +'-cloudsql-'+env["deployment"] %}
+{% set databasename = env["name"] +'-sensordb' %}
+
+resources:
+- name: {{instancename}}
+  type: sqladmin.v1beta4.instance
+  properties:
+    region: {{properties["region"]}}
+    settings:
+      {#Making the instance highly available. It can serve data from multiples zones in a region.#}
+      availabilityType: REGIONAL
+      tier: 'db-n1-standard-1'
+      backupConfiguration: {# Configuration for the database backups, binary logs are enabled #}
+        binaryLogEnabled: true
+        enabled: true
+
+- name: {{databasename}}
+  type: sqladmin.v1beta4.database
+  properties:
+    name: {{databasename}}
+    instance: $(ref.{{ instancename }}.name)

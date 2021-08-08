@@ -1,0 +1,6 @@
+info:
+  title: health check template 
+  description: Creates a health check resource for internal load balancing
+
+imports:
+- path: health-check-template.jinja

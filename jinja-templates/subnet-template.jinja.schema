@@ -1,0 +1,29 @@
+info:
+  title: Subnet template
+  description: Creates a new instance of the subnet resource
+
+imports:
+- path: subnet-template.jinja
+
+required:
+- ipCidrRange
+  region
+
+properties:
+  ipCidrRange:
+    type: string
+    description: The range of internal addresses that are owned by this subnetwork
+
+  network:
+    type: string
+    default: $(ref.sme-net.selfLink)
+    description: The network the subnet belongs to
+
+  region:
+    type: string
+    description: The region to which the subnet resides
+
+  description:
+    type: string
+    default: "Custom made regional subnet"
+    description: Description of the subnet

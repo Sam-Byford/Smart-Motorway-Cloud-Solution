@@ -1,0 +1,12 @@
+{#Reference for code - https://github.com/jeremysolarz/HA-NAT/blob/master/templates/HA-NAT.jinja#}
+
+resources:
+- name: {{env['name']}}
+  type: compute.v1.healthCheck
+  properties:
+    type: TCP
+    checkIntervalSec: 30
+    healthyThreshold: 1
+    unhealthyThreshold: 5
+    tcpHealthCheck:
+        port: 80

@@ -1,0 +1,13 @@
+resources:
+{# Iterate over the instances in the instances dictionary to create managed instance groups#}
+{% for iname, idata in properties['vm-instances'].items() -%}
+- name: {{env['name']}}-{{idata.zone}}
+  type: compute.v1.instanceGroupManager
+  properties:
+    instanceTemplate: {{idata.instanceTemplate}} {# use the given instance template to create instances inside the groups #}
+    zone: {{idata.zone}}
+    targetSize: 1 {# Only permit one instance per group #}
+    autoHealingPolicies: {# Uses the health check to determine whether or not to re-create un-healthy instances #}
+     - healthCheck: {{properties['health-check']}}
+       initialDelaySec: 120
+{% endfor %}

@@ -1,0 +1,14 @@
+info:
+  title: instance group template 
+  description: Creates a instance group to group VMs for internal load balancing
+
+imports:
+- path: instance-groups-template.jinja
+
+required:
+-  health-check
+
+properties:
+  health-check:
+    type: string
+    description: the health check for load balancing

@@ -1,0 +1,33 @@
+{% set apiurl = 'https://www.googleapis.com/compute/v1/projects'  %}
+
+resources:
+- name: {{ env["name"] }}
+  type: compute.v1.instanceTemplate
+  properties:
+    properties:
+      project: {{ env["project"] }}
+      zone: {{ properties["zone"] }}
+      machineType: n2-standard-4 {# better than base type in order to handle current computation needs and be able to handle larger needs when the company continues to grow #}
+      tags:
+        items:
+        {% for tag in properties['firewallTags'] -%}
+        - {{tag}}
+        {% endfor %}
+      {#Boot disk for the VM using the latest version of the windows -server image#}
+      disks:
+      - deviceName: boot
+        type: PERSISTENT
+        boot: true
+        autoDelete: true
+        initializeParams:
+          sourceImage: projects/windows-cloud/global/images/windows-server-2019-dc-v20201013
+      networkInterfaces:
+      - network:  {{properties["network"]}}
+        subnetwork: {{properties["subnetwork"]}}
+        accessConfigs:
+        - name: External NAT
+          type: ONE_TO_ONE_NAT
+      serviceAccounts:
+      - email: $(ref.{{ properties['serviceAccountId'] }}.email)
+        scopes:
+        - "https://www.googleapis.com/auth/cloud-platform"

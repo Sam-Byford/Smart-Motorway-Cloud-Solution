@@ -1,0 +1,31 @@
+{# Reference for code - https://github.com/GoogleCloudPlatform/deploymentmanager-samples/tree/master/examples/v2/internal_lb/python#}
+{# and - https://github.com/GoogleCloudPlatform/deploymentmanager-samples/blob/master/examples/v2/regional_igm/regional_igm.py#}
+
+{% set loadBalancerName = env["name"] + '-load-balancer' %}
+{% set forwardingRuleName = env["name"] + '-forwarding-rule' %}
+{% set targetPoolName = env["name"] + '-target-pool' %}
+
+resources:
+- name: {{loadBalancerName}}
+  type: compute.v1.regionBackendService
+  properties:
+    region: {{properties['region']}}
+    network: {{properties['network']}}
+    healthChecks:
+    - {{properties['health-check']}}
+    backends: 
+    {% for bname, bdata in properties['instance-Groups'].items() -%} {# add each group in a region to the regional load balancer #}
+    - group: https://www.googleapis.com/compute/v1/projects/cmp3747m-byford-15620782/zones/{{bdata.zone}}/instanceGroups/{{bdata.name}}
+    {% endfor %}
+    protocol: TCP
+    loadBalancingScheme: INTERNAL
+
+- name: {{forwardingRuleName}}
+  type: compute.v1.forwardingRule
+  properties:
+    ports: [80]
+    network: {{properties['network']}}
+    subnetwork: {{properties['subnetwork']}}
+    region: {{properties['region']}}
+    backendService: $(ref.{{loadBalancerName}}.selfLink)
+    loadBalancingScheme: INTERNAL

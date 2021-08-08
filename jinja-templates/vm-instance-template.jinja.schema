@@ -1,0 +1,26 @@
+info:
+  title: virtual machine template
+  description: Creates a new virtual machine (vm) instance
+
+imports:
+- path: vm-instance-template.jinja
+
+required:
+- zone
+  subnetwork
+
+properties:
+  zone:
+    type: string
+    description: The zone which the vm instance resides
+
+  network:
+    type: string
+    default: $(ref.sme-net.selfLink)
+    description: The network which the vm is in
+
+  subnetwork:
+    type: array
+    description: The regional subnetwork the vm is in
+    items:
+      type: string

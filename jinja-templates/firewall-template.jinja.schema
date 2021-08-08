@@ -1,0 +1,40 @@
+info:
+  title: Firewall template
+  description: Creates a new firewall protocol
+
+imports:
+- path: firewall-template.jinja
+
+required:
+- ports
+
+properties: 
+  network:
+    type: string
+    default: $(ref.sme-net.selfLink)
+    description: network that the protocol will be applied to
+
+  IPProtocol:
+    type: string
+    default: TCP
+    description: defines type of protocol
+
+  multiProtocols:
+    type: array
+    description: List of multiple protocols for a rule
+    items:
+      type: string
+    default: []
+
+  ports:
+    type: array
+    description: The ports that to protocol will be applied over
+    items:
+      type: string
+
+  sourceRanges:
+    type: array
+    description: Range of IPs the protocol will be applied to
+    items:
+      type: string
+    default: ["0.0.0.0/0"]

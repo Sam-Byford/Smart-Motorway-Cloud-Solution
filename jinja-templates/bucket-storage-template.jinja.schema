@@ -1,0 +1,29 @@
+info:
+  title: bucket storage template
+  description: Creates a bucket for storing camera data
+
+imports:
+- path: bucket-storage-template.jinja
+
+required:
+- location
+
+properties:
+  location:
+    type: string
+    description: region in which the bucket will reside
+
+  storageClass:
+    type: string
+    default: "STANDARD"
+    description: type of bucket to be created
+
+  logObjectPrefix:
+    type: string
+    description: Range of IPs the protocol will be applied to
+    default: "sme-log"
+
+  serviceAccountId:
+    type: string
+    description: ID of service account to assign admin permissions too
+    default: "bucket-access-account"

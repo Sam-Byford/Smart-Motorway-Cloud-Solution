@@ -1,0 +1,22 @@
+info:
+  title: Network template
+  description: Creates a new network
+
+imports:
+- path: network-template.jinja
+
+required:
+- autoCreateSubnetworks
+
+properties:
+  autoCreateSubnetworks:
+    type: boolean
+    default: false
+    description: Determines if subnets will be created automatically or custom, manual made
+
+  description:
+    type: string
+    default: "Custom made VPC network"
+    description: Description of the network
+
+  
