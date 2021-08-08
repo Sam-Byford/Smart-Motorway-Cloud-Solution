@@ -19,4 +19,5 @@ The YAML configuration file and template files you create should adopt an optima
 
 ## Cloud Architecture Diagram
 The following diagram displays the resources, storage and network configurations chosen for my solution.
+
 ![NewDiagram (1) (1)](https://user-images.githubusercontent.com/32711675/128641199-2f3bc39f-9068-40b4-83c9-dc6d8dbb49dc.png)
