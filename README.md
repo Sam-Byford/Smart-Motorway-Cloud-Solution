@@ -18,5 +18,5 @@ There is no single correct solution as there are many cloud resources type solut
 The YAML configuration file and template files you create should adopt an optimal approach to limit code repetition, with the emphasis on reusable templates as building blocks for importing in your configuration file. Your entire solution must be able to run from a single YAML configuration file.
 
 ## Cloud Architecture Diagram
-The following diagram displays the resources chosen for my solution as well as the storage and network configurations
+The following diagram displays the resources, storage and network configurations chosen for my solution.
 ![NewDiagram (1) (1)](https://user-images.githubusercontent.com/32711675/128641199-2f3bc39f-9068-40b4-83c9-dc6d8dbb49dc.png)
